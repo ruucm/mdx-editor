@@ -3,6 +3,7 @@ import { navigate } from "vite-plugin-ssr/client/router";
 import { Counter } from "./_components/Counter";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import { SOCKET_PORT } from "../consts";
+import { DndExample } from "./_components/dnd-example/DndExample";
 
 export default IndexPage;
 
@@ -69,6 +70,7 @@ function IndexPage() {
           write
         </button>
       </div>
+      <DndExample />
     </>
   );
 }

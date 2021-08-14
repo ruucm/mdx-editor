@@ -12,6 +12,7 @@
     "prod:serve": "serve dist/client/ --listen 3000"
   },
   "dependencies": {
+    "@dnd-kit/core": "^3.1.1",
     "@mdx-js/mdx": "^1.6.22",
     "@mdx-js/react": "^1.6.22",
     "@types/express": "^4.17.12",
