@@ -5,7 +5,8 @@ import { PageLayout } from "./PageLayout";
 import { PageContext } from "./types";
 import { getPageTitle } from "./getPageTitle";
 import { Provider as StyletronProvider } from "styletron-react";
-import { Server as Styletron } from "styletron-engine-atomic";
+// @ts-ignore
+import { Server as Styletron } from "styletron-engine-monolithic";
 
 export { render };
 export { passToClient };

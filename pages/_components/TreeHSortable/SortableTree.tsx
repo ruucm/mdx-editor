@@ -36,7 +36,8 @@ import {
 import type { FlattenedItem, SensorContext, TreeItems } from "./types";
 import { sortableTreeKeyboardCoordinates } from "./keyboardCoordinates";
 import { TreeItem, SortableTreeItem, Row } from "./components";
-import { initialItems2 } from "./mockItems";
+import { mdxItemsAtom } from "../../../store";
+import { useAtom } from "jotai";
 
 const measuring = {
   droppable: {
@@ -56,14 +57,16 @@ interface Props {
   indentationWidth?: number;
   indicator?: boolean;
   removable?: boolean;
+  setMdxItems?: (items: TreeItems) => void;
 }
 
 export function SortableTree({
   collapsible,
-  defaultItems = initialItems2,
+  defaultItems = [],
   indicator,
   indentationWidth = 50,
   removable,
+  setMdxItems,
 }: Props) {
   const [items, setItems] = useState(() => defaultItems);
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -240,6 +243,8 @@ export function SortableTree({
       console.log("newItems", newItems);
 
       setItems(newItems);
+      // store it!
+      setMdxItems?.(newItems);
     }
   }
 

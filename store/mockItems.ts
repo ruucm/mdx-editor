@@ -1,10 +1,16 @@
-import { TreeItems } from "./types"
+export interface TreeItem {
+  id: string;
+  children: TreeItem[];
+  collapsed?: boolean;
+}
+
+export type TreeItems = TreeItem[];
 
 export const initialItems: TreeItems = [
   {
     id: '👩‍🎨 Block { maxWidth: "1080px", margin: "0 auto", textAlign: "center" }',
     children: [
-      { id: "# Title", children: [] },
+      { id: "# Title 2", children: [] },
       {
         id: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
         children: [],
@@ -15,7 +21,7 @@ export const initialItems: TreeItems = [
       },
     ],
   },
-]
+];
 
 export const initialItems2: TreeItems = [
   {
@@ -52,7 +58,7 @@ export const initialItems2: TreeItems = [
       },
     ],
   },
-]
+];
 
 export const initialItems3: TreeItems = [
   {
@@ -117,4 +123,4 @@ export const initialItems3: TreeItems = [
       },
     ],
   },
-]
+];

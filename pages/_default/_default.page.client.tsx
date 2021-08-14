@@ -5,7 +5,8 @@ import type { PageContextBuiltInClient } from "vite-plugin-ssr/types";
 import { PageContext } from "./types";
 import { PageLayout } from "./PageLayout";
 import { getPageTitle } from "./getPageTitle";
-import { Client as Styletron } from "styletron-engine-atomic";
+// @ts-ignore
+import { Client as Styletron } from "styletron-engine-monolithic";
 import { Provider as StyletronProvider } from "styletron-react";
 import { LightTheme, LighthouseProvider } from "@harborschool/lighthouse";
 

@@ -2,10 +2,22 @@ import React, { useEffect, useState } from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import { SOCKET_PORT } from "../../consts";
 import { MySetup } from "../_components/TreeHSortable/Tree.story";
-import { isClient } from "../../utils";
+import { isClient, parseMdxItems } from "../../utils";
+import { useAtom } from "jotai";
+import { mdxItemsAtom } from "../../store";
 
 export function Page({ content }: any) {
-  const [value, setValue] = useState(content);
+  const [mdxItems] = useAtom(mdxItemsAtom);
+
+  useEffect(() => {
+    const json = JSON.stringify({
+      filename: "hello-1.page.mdx",
+      content: parseMdxItems(mdxItems),
+    });
+    sendMessage(json);
+  }, [mdxItems]);
+
+  const [value, setValue] = useState("");
   const hostname = typeof window !== "undefined" && window.location.hostname;
   const socketUrl = `ws://${hostname}:${SOCKET_PORT}`;
   const { sendMessage, lastMessage, readyState } = useWebSocket(socketUrl);

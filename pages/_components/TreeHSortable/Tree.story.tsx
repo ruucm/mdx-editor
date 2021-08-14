@@ -1,10 +1,12 @@
-import React from "react"
+import { useAtom } from "jotai";
+import React from "react";
+import { mdxItemsAtom } from "../../../store";
 
-import { SortableTree } from "./SortableTree"
+import { SortableTree } from "./SortableTree";
 
 export default {
   title: "Examples/Tree/Sortable",
-}
+};
 
 const Wrapper = ({ children }: { children: React.ReactNode }) => (
   <div
@@ -17,40 +19,48 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => (
   >
     {children}
   </div>
-)
+);
 
-export const MySetup = () => (
-  <Wrapper>
-    <SortableTree collapsible removable />
-  </Wrapper>
-)
+export const MySetup = () => {
+  const [mdxItems, setMdxItems] = useAtom(mdxItemsAtom);
 
+  return (
+    <Wrapper>
+      <SortableTree
+        collapsible
+        removable
+        defaultItems={mdxItems}
+        setMdxItems={setMdxItems}
+      />
+    </Wrapper>
+  );
+};
 export const BasicSetup = () => (
   <Wrapper>
     <SortableTree />
   </Wrapper>
-)
+);
 
 export const AllFeatures = () => (
   <Wrapper>
     <SortableTree collapsible indicator removable />
   </Wrapper>
-)
+);
 
 export const DropIndicator = () => (
   <Wrapper>
     <SortableTree indicator />
   </Wrapper>
-)
+);
 
 export const Collapsible = () => (
   <Wrapper>
     <SortableTree collapsible />
   </Wrapper>
-)
+);
 
 export const RemovableItems = () => (
   <Wrapper>
     <SortableTree removable />
   </Wrapper>
-)
+);
