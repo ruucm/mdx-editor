@@ -5,14 +5,22 @@ import type { PageContextBuiltInClient } from "vite-plugin-ssr/types";
 import { PageContext } from "./types";
 import { PageLayout } from "./PageLayout";
 import { getPageTitle } from "./getPageTitle";
+import { Client as Styletron } from "styletron-engine-atomic";
+import { Provider as StyletronProvider } from "styletron-react";
+import { LightTheme, LighthouseProvider } from "@harborschool/lighthouse";
 
+const engine = new Styletron();
 const { hydrationPromise } = useClientRouter({
   render(pageContext: PageContext & PageContextBuiltInClient) {
     const { Page, pageProps } = pageContext;
     const page = (
-      <PageLayout>
-        <Page {...pageProps} />
-      </PageLayout>
+      <StyletronProvider value={engine}>
+        <LighthouseProvider theme={LightTheme}>
+          <PageLayout>
+            <Page {...pageProps} />
+          </PageLayout>
+        </LighthouseProvider>
+      </StyletronProvider>
     );
     const container = document.getElementById("page-view");
     if (pageContext.isHydration) {

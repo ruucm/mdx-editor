@@ -4,18 +4,23 @@ import { html } from "vite-plugin-ssr";
 import { PageLayout } from "./PageLayout";
 import { PageContext } from "./types";
 import { getPageTitle } from "./getPageTitle";
+import { Provider as StyletronProvider } from "styletron-react";
+import { Server as Styletron } from "styletron-engine-atomic";
 
 export { render };
 export { passToClient };
 
 const passToClient = ["pageProps", "documentProps"];
 
+const engine = new Styletron();
 function render(pageContext: PageContext) {
   const { Page, pageProps } = pageContext;
   const pageContent = ReactDOMServer.renderToString(
-    <PageLayout>
-      <Page {...pageProps} />
-    </PageLayout>
+    <StyletronProvider value={engine}>
+      <PageLayout>
+        <Page {...pageProps} />
+      </PageLayout>
+    </StyletronProvider>
   );
 
   const title = getPageTitle(pageContext);

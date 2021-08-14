@@ -1,5 +1,7 @@
 import React from "react";
 import "./PageLayout.css";
+import { MDXProvider } from "@mdx-js/react";
+import { shortcodes } from "./shortcodes";
 
 export { PageLayout };
 
@@ -8,14 +10,16 @@ type Children = React.ReactNode;
 function PageLayout({ children }: { children: Children }) {
   return (
     <React.StrictMode>
-      <Layout>
-        <Sidebar>
-          <a href="/">Home</a>
-          <a href="/editor">Editor</a>
-          <a href="/mdx-pages/hello-1">hello-1</a>
-        </Sidebar>
-        <Content>{children}</Content>
-      </Layout>
+      <MDXProvider components={shortcodes}>
+        <Layout>
+          <Sidebar>
+            <a href="/">Home</a>
+            <a href="/editor">Editor</a>
+            <a href="/mdx-pages/hello-1">hello-1</a>
+          </Sidebar>
+          <Content>{children}</Content>
+        </Layout>
+      </MDXProvider>
     </React.StrictMode>
   );
 }
