@@ -1,5 +1,4 @@
 import React from "react";
-import logo from "./logo.svg";
 import "./PageLayout.css";
 
 export { PageLayout };
@@ -11,10 +10,9 @@ function PageLayout({ children }: { children: Children }) {
     <React.StrictMode>
       <Layout>
         <Sidebar>
-          <Logo />
-          <a href="/markdown">Markdown</a>
-          <a href="/star-wars">Data Fetching</a>
-          <a href="/hello/alice">Routing</a>
+          <a href="/">Home</a>
+          <a href="/editor">Editor</a>
+          <a href="/mdx-pages/hello-1">hello-1</a>
         </Sidebar>
         <Content>{children}</Content>
       </Layout>
@@ -23,17 +21,7 @@ function PageLayout({ children }: { children: Children }) {
 }
 
 function Layout({ children }: { children: Children }) {
-  return (
-    <div
-      style={{
-        display: "flex",
-        maxWidth: 900,
-        margin: "auto",
-      }}
-    >
-      {children}
-    </div>
-  );
+  return <div>{children}</div>;
 }
 
 function Sidebar({ children }: { children: Children }) {
@@ -64,21 +52,6 @@ function Content({ children }: { children: Children }) {
       }}
     >
       {children}
-    </div>
-  );
-}
-
-function Logo() {
-  return (
-    <div
-      style={{
-        marginTop: 20,
-        marginBottom: 10,
-      }}
-    >
-      <a href="/">
-        <img src={logo} height={64} width={64} />
-      </a>
     </div>
   );
 }
