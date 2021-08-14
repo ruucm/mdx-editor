@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import { SOCKET_PORT } from "../consts";
 import { MySetup } from "./_components/TreeHSortable/Tree.story";
@@ -20,7 +20,9 @@ function EditorPage() {
     [ReadyState.UNINSTANTIATED]: "Uninstantiated",
   }[readyState];
 
-  console.log("lastMessage", lastMessage);
+  useEffect(() => {
+    console.log("lastMessage", lastMessage);
+  }, [lastMessage]);
 
   return (
     <>
