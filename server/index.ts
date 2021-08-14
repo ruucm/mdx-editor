@@ -3,7 +3,6 @@ import { createPageRender } from "vite-plugin-ssr";
 import * as vite from "vite";
 import { serverSocket } from "./server-socket";
 const fs = require("fs");
-const ip = require("ip");
 
 const isProduction = process.env.NODE_ENV === "production";
 const root = `${__dirname}/..`;
@@ -45,7 +44,7 @@ async function startServer() {
 
   const port = 3000;
   app.listen(port);
-  console.log(`Server running at http://${ip.address()}:${port}`);
+  console.log(`Server running at http://localhost:${port}`);
 }
 
 const DIRNAME = opts.dirname;
