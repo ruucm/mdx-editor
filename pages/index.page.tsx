@@ -4,6 +4,8 @@ import { Counter } from "./_components/Counter";
 import useWebSocket, { ReadyState } from "react-use-websocket";
 import { SOCKET_PORT } from "../consts";
 import { DndExample } from "./_components/dnd-example/DndExample";
+import { MySetup } from "./_components/TreeHSortable/Tree.story";
+import { isClient } from "../utils";
 
 export default IndexPage;
 
@@ -70,7 +72,12 @@ function IndexPage() {
           write
         </button>
       </div>
-      <DndExample />
+      <div>
+        dnd
+        <br />
+        {isClient && <DndExample />}
+        {isClient && <MySetup />}
+      </div>
     </>
   );
 }
