@@ -1,13 +1,11 @@
 import React, { useEffect, useState } from "react";
 import useWebSocket, { ReadyState } from "react-use-websocket";
-import { SOCKET_PORT } from "../consts";
-import { MySetup } from "./_components/TreeHSortable/Tree.story";
-import { isClient } from "../utils";
+import { SOCKET_PORT } from "../../consts";
+import { MySetup } from "../_components/TreeHSortable/Tree.story";
+import { isClient } from "../../utils";
 
-export default EditorPage;
-
-function EditorPage() {
-  const [value, setValue] = useState("");
+export function Page({ content }: any) {
+  const [value, setValue] = useState(content);
   const hostname = typeof window !== "undefined" && window.location.hostname;
   const socketUrl = `ws://${hostname}:${SOCKET_PORT}`;
   const { sendMessage, lastMessage, readyState } = useWebSocket(socketUrl);
