@@ -6,7 +6,7 @@ import { isClient } from "../../utils";
 import { useAtom } from "jotai";
 import { mdxItemsAtom } from "../../store";
 
-export function Page({ content, list }: any) {
+export function Page({ list }: any) {
   const hostname = typeof window !== "undefined" && window.location.hostname;
   const socketUrl = `ws://${hostname}:${SOCKET_PORT}`;
   const { sendMessage, lastMessage, readyState } = useWebSocket(socketUrl);
