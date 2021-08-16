@@ -6,15 +6,17 @@ import { isClient, parseMdxItems } from "../../utils";
 import { useAtom } from "jotai";
 import { mdxItemsAtom } from "../../store";
 
-export function Page({ content }: any) {
+export function Page({ content, jsx }: any) {
   const [mdxItems] = useAtom(mdxItemsAtom);
 
   useEffect(() => {
-    const json = JSON.stringify({
-      filename: "hello-1.page.mdx",
-      content: parseMdxItems(mdxItems),
-    });
-    sendMessage(json);
+    if (mdxItems.length) {
+      const json = JSON.stringify({
+        filename: "hello-1.page.mdx",
+        content: parseMdxItems(mdxItems),
+      });
+      sendMessage(json);
+    }
   }, [mdxItems]);
 
   const [value, setValue] = useState("");
@@ -36,6 +38,7 @@ export function Page({ content }: any) {
 
   return (
     <>
+      {/* {jsx} */}
       connectionStatus : {connectionStatus}
       <br />
       <textarea
