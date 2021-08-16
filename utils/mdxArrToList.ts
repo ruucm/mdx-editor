@@ -59,17 +59,14 @@ export function mdxArrToList(arr: any) {
 
 function parseJSX(jsx: any) {
   const parsed = parse(jsx);
+
   // @ts-ignore
-  const rawAttrs = parsed.childNodes[0].parentNode.childNodes[0].rawAttrs;
-  console.log("rawAttrs", rawAttrs);
-  const componentName = jsx
-    .replace(rawAttrs, "")
-    .replace("<", "")
-    .replace(">", "")
-    .replace(" ", "");
+  const { rawTagName, rawAttrs } =
+    parsed.childNodes[0].parentNode.childNodes[0];
+
   const properties = objectifiedStr(rawAttrs);
 
-  return { componentName, properties };
+  return { componentName: rawTagName, properties };
 }
 
 function objectifiedStr(str: string) {
