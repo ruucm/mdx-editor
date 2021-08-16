@@ -1,18 +1,20 @@
 import { parse } from "node-html-parser";
 
-export function mdxArrToList(arr: any) {
+export function mdxArrToList(
+  arr: any,
+  start: number = 0,
+  grabOne: boolean = false
+) {
   const list = [];
   let listItem: any = { id: "", children: [] };
 
   const items = arr;
   let currentComponent = "";
 
-  for (let i = 0; i < items.length; i++) {
+  for (let i = start; i < items.length; i++) {
     const item = items[i];
 
-    var regExp = /\<([^)]+)\>/;
-    var matches = regExp.exec(item);
-    const isHtml = matches && matches.length > 0;
+    const isHtml = checkBraces(item);
 
     const isSingleTag = isHtml && item.includes("/>");
     const isOpenTag = isHtml && item.indexOf("<") === 0 && !item.includes("</");
@@ -20,6 +22,8 @@ export function mdxArrToList(arr: any) {
     const tagType = getTagType(isSingleTag, isOpenTag, isCloseTag);
 
     const { componentName, properties }: any = parseJSX(item, isHtml, tagType);
+
+    console.log("currentComponent", currentComponent);
 
     if (isHtml) {
       currentComponent = componentName;
@@ -33,10 +37,16 @@ export function mdxArrToList(arr: any) {
       } else if (isCloseTag) {
         // close component
         currentComponent = "";
+
+        if (grabOne) {
+          list.push(listItem);
+          break;
+        }
       }
     } else {
       if (currentComponent) {
         if (!listItem.children) listItem.children = [];
+
         // handle children of the opened component
         listItem.children.push({ id: item, children: [] });
       } else if (!currentComponent) {
@@ -45,7 +55,6 @@ export function mdxArrToList(arr: any) {
       }
     }
     console.log(`listItem (${i})`, listItem);
-    console.log("currentComponent", currentComponent);
 
     if (!currentComponent) {
       console.log("listItem!", listItem);
@@ -105,4 +114,11 @@ function getTagType(
   if (isSingleTag) return "single";
   else if (isOpenTag) return "open";
   else if (isCloseTag) return "close";
+}
+
+function checkBraces(item: string) {
+  const regExp = /\<([^)]+)\>/;
+  const matches = regExp.exec(item);
+
+  return matches && matches.length > 0;
 }
