@@ -68,13 +68,11 @@ function getMaxDepth({
   activeItem: FlattenedItem;
   previousItem: FlattenedItem;
 }) {
-  if (previousItem.id.includes("👩‍🎨")) {
-    if (previousItem) {
+  if (previousItem) {
+    if (previousItem.id.includes("👩‍🎨")) {
       return previousItem.depth + 1;
-    }
-
-    return 0;
-  } else return previousItem.depth;
+    } else return previousItem.depth;
+  } else return 0;
 }
 
 function getMinDepth({
