@@ -1,6 +1,7 @@
 import fs from "fs";
 import matter from "gray-matter";
 import path from "path";
+import { mdxArrToList } from "../../utils";
 
 export { addPageContext };
 
@@ -13,10 +14,11 @@ type PageContext = {
 };
 
 async function addPageContext(pageContext: any): Promise<PageContext> {
-  const { content, data } = getMdxSource();
+  const { content, data, list } = getMdxSource();
   return {
     pageProps: {
       content,
+      list,
     },
     documentProps: {
       title: "Editor",
@@ -31,5 +33,8 @@ function getMdxSource() {
   const source = fs.readFileSync(postFilePath);
   const { content, data } = matter(source);
 
-  return { content, data };
+  const arr = content.split(/\n/).filter((line) => line !== "");
+  const list = mdxArrToList(arr);
+
+  return { content, data, list };
 }

@@ -12,7 +12,10 @@ export const initialItems: TreeItems = [
     children: [
       { id: "# Title 2", children: [] },
       {
-        id: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+        id: `Lorem ipsum dolor sit amet, consectetur 
+        
+        
+        adipiscing elit.`,
         children: [],
       },
       {

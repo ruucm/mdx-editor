@@ -72,6 +72,9 @@ export function SortableTree({
   sendMessage,
 }: Props) {
   const [items, setItems] = useState(() => defaultItems);
+  useEffect(() => {
+    setItems(defaultItems);
+  }, [defaultItems]);
   const [activeId, setActiveId] = useState<string | null>(null);
   const [overId, setOverId] = useState<string | null>(null);
   const [offsetLeft, setOffsetLeft] = useState(0);
