@@ -48,7 +48,7 @@ export function mdxArrToList(arr: any) {
     if (!componentOpened) {
       console.log("listItem!", listItem);
       list.push(listItem);
-      listItem = {};
+      listItem = { id: "", children: [] };
     }
   }
 
