@@ -29,10 +29,10 @@ export function mdxArrToList(
     if (isHtml) {
       if (isSingleTag) {
         // handle a single component
-        listItem.id = item;
+        listItem.id = `👩‍🎨 ${componentName} ${properties}`;
       } else if (isOpenTag) {
         if (!currentComponent) {
-          // handle a component that has children
+          // handle a composavnent that has children
           currentComponent = componentName;
           listItem.id = `👩‍🎨 ${componentName} ${properties}`;
         } else {
@@ -79,7 +79,7 @@ export function mdxArrToList(
 function parseJSX(jsx: any, isHtml: any, tagType: TagType) {
   if (!isHtml) return { componentName: "", properties: "" };
 
-  if (tagType === "open") {
+  if (tagType === "open" || tagType === "single") {
     const parsed = parse(jsx);
 
     // @ts-ignore

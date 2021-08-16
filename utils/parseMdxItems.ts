@@ -18,6 +18,7 @@ function parseMdxItem(mdxItem: any) {
 
   if (isComponent) {
     const propertyString = getContentBetweenCurly(content);
+    console.log("propertyString", propertyString);
     const componentName = content
       .replace(propertyString, "")
       .replace("{", "")
@@ -26,8 +27,7 @@ function parseMdxItem(mdxItem: any) {
       .replace("👩‍🎨", "");
     const hasChild = mdxItem.children.length > 0;
 
-    if (hasChild) res += `<${componentName}`;
-    else res += `<${componentName} />`;
+    res += `\n\n<${componentName}`;
 
     if (!isEmptyOrSpaces(propertyString)) {
       const splited = propertyString.split(",");
@@ -45,6 +45,7 @@ function parseMdxItem(mdxItem: any) {
     }
 
     if (hasChild) res += ">";
+    else res += "/>";
 
     // handle children of the component
     const children = mdxItem.children;
@@ -55,7 +56,7 @@ function parseMdxItem(mdxItem: any) {
       }
     }
 
-    if (hasChild) res += `</${componentName}>`;
+    if (hasChild) res += `</${componentName}>\n\n`;
   } else {
     res += "\n\n";
     res += content;
