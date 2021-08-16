@@ -50,6 +50,7 @@ function jsxToCompStr(jsx: any) {
   const parsed = parse(jsx);
   // @ts-ignore
   const rawAttrs = parsed.childNodes[0].parentNode.childNodes[0].rawAttrs;
+  console.log("rawAttrs", rawAttrs);
   const componentName = jsx
     .replace(rawAttrs, "")
     .replace("<", "")
@@ -67,8 +68,15 @@ function propertiesStrToObj(str: string) {
   let res = "";
   res += "{ ";
 
-  const trimed = str.replace(/=/g, " : ");
-  res += trimed;
+  var regExp = /(\S+)=["']?((?:.(?!["']?\s+(?:\S+)=|[>"']))+.)["']?/g;
+  const found = str.match(regExp);
+
+  if (found) {
+    for (let i = 0; i < found.length; i++) {
+      res += found[i].replace("=", " : ");
+      if (i < found.length - 1) res += ", ";
+    }
+  }
 
   res += "}";
 
