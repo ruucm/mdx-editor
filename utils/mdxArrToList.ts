@@ -5,7 +5,7 @@ export function mdxArrToList(arr: any) {
   let listItem: any = { id: "", children: [] };
 
   const items = arr;
-  let componentOpened = false;
+  let currentComponent = "";
 
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
@@ -14,17 +14,15 @@ export function mdxArrToList(arr: any) {
     var matches = regExp.exec(item);
     const isHtml = matches && matches.length > 0;
 
+    const isSingleTag = isHtml && item.includes("/>");
+    const isOpenTag = isHtml && item.indexOf("<") === 0 && !item.includes("</");
+    const isCloseTag = isHtml && item.indexOf("</") === 0;
+    const tagType = getTagType(isSingleTag, isOpenTag, isCloseTag);
+
+    const { componentName, properties }: any = parseJSX(item, isHtml, tagType);
+
     if (isHtml) {
-      componentOpened = true;
-
-      const isSingleTag = item.includes("/>");
-      const isOpenTag = item.indexOf("<") === 0 && !item.includes("</");
-      const isCloseTag = item.indexOf("</") === 0;
-
-      const { componentName, properties }: any = parseJSX(
-        item,
-        getTagType(isSingleTag, isOpenTag, isCloseTag)
-      );
+      currentComponent = componentName;
 
       if (isSingleTag) {
         // handle a single component
@@ -34,22 +32,22 @@ export function mdxArrToList(arr: any) {
         listItem.id = `👩‍🎨 ${componentName} ${properties}`;
       } else if (isCloseTag) {
         // close component
-        componentOpened = false;
+        currentComponent = "";
       }
     } else {
-      if (componentOpened) {
+      if (currentComponent) {
         if (!listItem.children) listItem.children = [];
         // handle children of the opened component
         listItem.children.push({ id: item, children: [] });
-      } else if (!componentOpened) {
+      } else if (!currentComponent) {
         // handle normal markdown texts
         listItem.id = item;
       }
     }
     console.log(`listItem (${i})`, listItem);
-    console.log("componentOpened", componentOpened);
+    console.log("currentComponent", currentComponent);
 
-    if (!componentOpened) {
+    if (!currentComponent) {
       console.log("listItem!", listItem);
       list.push(listItem);
       listItem = { id: "", children: [] };
@@ -59,10 +57,11 @@ export function mdxArrToList(arr: any) {
   return list;
 }
 
-function parseJSX(jsx: any, tagType: TagType) {
+function parseJSX(jsx: any, isHtml: any, tagType: TagType) {
+  if (!isHtml) return { componentName: "", properties: "" };
+
   if (tagType === "open") {
     const parsed = parse(jsx);
-    console.log("parsed", parsed);
 
     // @ts-ignore
     const { rawTagName, rawAttrs } =
@@ -100,8 +99,8 @@ type TagType = "single" | "open" | "close" | undefined;
 
 function getTagType(
   isSingleTag: boolean,
-  isOpenTag: boolean,
-  isCloseTag: boolean
+  isOpenTag: boolean | null,
+  isCloseTag: boolean | null
 ): TagType {
   if (isSingleTag) return "single";
   else if (isOpenTag) return "open";
