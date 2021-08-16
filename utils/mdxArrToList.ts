@@ -26,13 +26,12 @@ export function mdxArrToList(
     console.log("currentComponent", currentComponent);
 
     if (isHtml) {
-      currentComponent = componentName;
-
       if (isSingleTag) {
         // handle a single component
         listItem.id = item;
       } else if (isOpenTag) {
         // handle a component that has children
+        currentComponent = componentName;
         listItem.id = `👩‍🎨 ${componentName} ${properties}`;
       } else if (isCloseTag) {
         // close component
