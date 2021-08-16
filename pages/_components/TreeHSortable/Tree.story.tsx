@@ -21,7 +21,7 @@ const Wrapper = ({ children }: { children: React.ReactNode }) => (
   </div>
 );
 
-export const MySetup = () => {
+export const MySetup = ({ sendMessage }: any) => {
   const [mdxItems, setMdxItems] = useAtom(mdxItemsAtom);
 
   return (
@@ -31,6 +31,7 @@ export const MySetup = () => {
         removable
         defaultItems={mdxItems}
         setMdxItems={setMdxItems}
+        sendMessage={sendMessage}
       />
     </Wrapper>
   );

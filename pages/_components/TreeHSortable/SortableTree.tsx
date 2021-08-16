@@ -38,6 +38,7 @@ import { sortableTreeKeyboardCoordinates } from "./keyboardCoordinates";
 import { TreeItem, SortableTreeItem, Row } from "./components";
 import { mdxItemsAtom } from "../../../store";
 import { useAtom } from "jotai";
+import { parseMdxItems } from "../../../utils";
 
 const measuring = {
   droppable: {
@@ -58,6 +59,7 @@ interface Props {
   indicator?: boolean;
   removable?: boolean;
   setMdxItems?: (items: TreeItems) => void;
+  sendMessage?: (message: string) => void;
 }
 
 export function SortableTree({
@@ -67,6 +69,7 @@ export function SortableTree({
   indentationWidth = 50,
   removable,
   setMdxItems,
+  sendMessage,
 }: Props) {
   const [items, setItems] = useState(() => defaultItems);
   const [activeId, setActiveId] = useState<string | null>(null);
@@ -245,6 +248,12 @@ export function SortableTree({
       setItems(newItems);
       // store it!
       setMdxItems?.(newItems);
+      // send it
+      const json = JSON.stringify({
+        filename: "hello-1.page.mdx",
+        content: parseMdxItems(newItems),
+      });
+      sendMessage?.(json);
     }
   }
 
