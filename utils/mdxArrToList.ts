@@ -17,20 +17,22 @@ export function mdxArrToList(arr: any) {
     if (isHtml) {
       componentOpened = true;
 
-      const isSingleComponentTag = item.includes("/>");
-      const isComponentOpenTag =
-        item.indexOf("<") === 0 && !item.includes("</");
-      const isComponentCloseTag = item.indexOf("</") === 0;
+      const isSingleTag = item.includes("/>");
+      const isOpenTag = item.indexOf("<") === 0 && !item.includes("</");
+      const isCloseTag = item.indexOf("</") === 0;
 
-      if (isSingleComponentTag) {
+      const { componentName, properties }: any = parseJSX(
+        item,
+        getTagType(isSingleTag, isOpenTag, isCloseTag)
+      );
+
+      if (isSingleTag) {
         // handle a single component
         listItem.id = item;
-      } else if (isComponentOpenTag) {
+      } else if (isOpenTag) {
         // handle a component that has children
-
-        const { componentName, properties } = parseJSX(item);
         listItem.id = `👩‍🎨 ${componentName} ${properties}`;
-      } else if (isComponentCloseTag) {
+      } else if (isCloseTag) {
         // close component
         componentOpened = false;
       }
@@ -57,14 +59,22 @@ export function mdxArrToList(arr: any) {
   return list;
 }
 
-function parseJSX(jsx: any) {
-  const parsed = parse(jsx);
+function parseJSX(jsx: any, tagType: TagType) {
+  if (tagType === "open") {
+    const parsed = parse(jsx);
+    console.log("parsed", parsed);
 
-  // @ts-ignore
-  const { rawTagName, rawAttrs } =
-    parsed.childNodes[0].parentNode.childNodes[0];
+    // @ts-ignore
+    const { rawTagName, rawAttrs } =
+      parsed.childNodes[0].parentNode.childNodes[0];
 
-  return { componentName: rawTagName, properties: objectifiedStr(rawAttrs) };
+    return { componentName: rawTagName, properties: objectifiedStr(rawAttrs) };
+  } else if (tagType === "close") {
+    return {
+      componentName: jsx.replace("</", "").replace(">", ""),
+      properties: "",
+    };
+  }
 }
 
 function objectifiedStr(str: string) {
@@ -84,4 +94,16 @@ function objectifiedStr(str: string) {
   res += "}";
 
   return res;
+}
+
+type TagType = "single" | "open" | "close" | undefined;
+
+function getTagType(
+  isSingleTag: boolean,
+  isOpenTag: boolean,
+  isCloseTag: boolean
+): TagType {
+  if (isSingleTag) return "single";
+  else if (isOpenTag) return "open";
+  else if (isCloseTag) return "close";
 }
