@@ -27,7 +27,9 @@ export function mdxArrToList(arr: any) {
         listItem.id = item;
       } else if (isComponentOpenTag) {
         // handle a component that has children
-        listItem.id = jsxToCompStr(item);
+
+        const { componentName, properties } = parseJSX(item);
+        listItem.id = `👩‍🎨 ${componentName} ${properties}`;
       } else if (isComponentCloseTag) {
         // close component
         componentOpened = false;
@@ -55,7 +57,7 @@ export function mdxArrToList(arr: any) {
   return list;
 }
 
-function jsxToCompStr(jsx: any) {
+function parseJSX(jsx: any) {
   const parsed = parse(jsx);
   // @ts-ignore
   const rawAttrs = parsed.childNodes[0].parentNode.childNodes[0].rawAttrs;
@@ -65,15 +67,12 @@ function jsxToCompStr(jsx: any) {
     .replace("<", "")
     .replace(">", "")
     .replace(" ", "");
-  console.log("componentName", componentName);
-  const propertiesObjStr = propertiesStrToObj(rawAttrs);
+  const properties = objectifiedStr(rawAttrs);
 
-  console.log("propertiesObjStr", propertiesObjStr);
-
-  return `👩‍🎨 ${componentName} ${propertiesObjStr}`;
+  return { componentName, properties };
 }
 
-function propertiesStrToObj(str: string) {
+function objectifiedStr(str: string) {
   let res = "";
   res += "{ ";
 
