@@ -26,7 +26,8 @@ async function addPageContext(pageContext: any): Promise<PageContext> {
 }
 
 function getMdxSource() {
-  const postFilePath = `${path.resolve()}/pages/mdx-pages/hello-1.page.mdx`;
+  const POSTS_PATH = path.join(process.cwd(), "pages/mdx-pages");
+  const postFilePath = path.join(POSTS_PATH, `hello-1.page.mdx`);
   const source = fs.readFileSync(postFilePath);
   const { content, data } = matter(source);
 
