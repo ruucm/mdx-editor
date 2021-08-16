@@ -64,9 +64,7 @@ function parseJSX(jsx: any) {
   const { rawTagName, rawAttrs } =
     parsed.childNodes[0].parentNode.childNodes[0];
 
-  const properties = objectifiedStr(rawAttrs);
-
-  return { componentName: rawTagName, properties };
+  return { componentName: rawTagName, properties: objectifiedStr(rawAttrs) };
 }
 
 function objectifiedStr(str: string) {
