@@ -2,10 +2,10 @@ import { parse } from "node-html-parser";
 
 export function mdxArrToList(arr: any) {
   const list = [];
-  let listItem: any = {};
-  let compStart = 0;
+  let listItem: any = { id: "", children: [] };
 
   const items = arr;
+  let componentOpened = false;
 
   for (let i = 0; i < items.length; i++) {
     const item = items[i];
@@ -15,28 +15,37 @@ export function mdxArrToList(arr: any) {
     const isHtml = matches && matches.length > 0;
 
     if (isHtml) {
-      if (item.includes("/>")) {
+      componentOpened = true;
+
+      const isSingleComponentTag = item.includes("/>");
+      const isComponentOpenTag =
+        item.indexOf("<") === 0 && !item.includes("</");
+      const isComponentCloseTag = item.indexOf("</") === 0;
+
+      if (isSingleComponentTag) {
         // handle a single component
         listItem.id = item;
-      } else if (!item.includes("</")) {
+      } else if (isComponentOpenTag) {
         // handle a component that has children
         listItem.id = jsxToCompStr(item);
-        compStart = i;
-        listItem.children = [];
-
-        for (let j = compStart + 1; j < items.length; j++) {
-          const childItem = items[j];
-
-          if (childItem.includes("</")) break;
-
-          if (!childItem.includes("</"))
-            listItem.children.push({ id: childItem, children: [] });
-        }
-      } else if (item.includes("</")) {
-        // do nothing
+      } else if (isComponentCloseTag) {
+        // close component
+        componentOpened = false;
+      }
+    } else {
+      if (componentOpened) {
+        if (!listItem.children) listItem.children = [];
+        // handle children of the opened component
+        listItem.children.push({ id: item, children: [] });
+      } else if (!componentOpened) {
+        // handle normal markdown texts
+        listItem.id = item;
       }
     }
-    if (Object.keys(listItem).length > 0) {
+    console.log(`listItem (${i})`, listItem);
+    console.log("componentOpened", componentOpened);
+
+    if (!componentOpened) {
       console.log("listItem!", listItem);
       list.push(listItem);
       listItem = {};
