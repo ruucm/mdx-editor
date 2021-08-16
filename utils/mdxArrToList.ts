@@ -23,18 +23,29 @@ export function mdxArrToList(
 
     const { componentName, properties }: any = parseJSX(item, isHtml, tagType);
 
-    console.log("currentComponent", currentComponent);
+    console.log(`tagType (${i})`, tagType);
+    console.log("item", item);
 
     if (isHtml) {
       if (isSingleTag) {
         // handle a single component
         listItem.id = item;
       } else if (isOpenTag) {
-        // handle a component that has children
-        currentComponent = componentName;
-        listItem.id = `👩‍🎨 ${componentName} ${properties}`;
-      } else if (isCloseTag) {
-        // close component
+        if (!currentComponent) {
+          // handle a component that has children
+          currentComponent = componentName;
+          listItem.id = `👩‍🎨 ${componentName} ${properties}`;
+        } else {
+          // recursively add nested children
+          const childrenIsHtml = checkBraces(item);
+          if (childrenIsHtml) {
+            const nestedChildren = mdxArrToList(arr, i, true);
+            listItem.children.push(nestedChildren[0]);
+            i++; // skip next line
+          }
+        }
+      } else if (isCloseTag && currentComponent === componentName) {
+        // close component (only close for the same opening tag)
         currentComponent = "";
 
         if (grabOne) {
@@ -55,8 +66,8 @@ export function mdxArrToList(
     }
     console.log(`listItem (${i})`, listItem);
 
-    if (!currentComponent) {
-      console.log("listItem!", listItem);
+    // push the list item
+    if (!currentComponent && listItem.id) {
       list.push(listItem);
       listItem = { id: "", children: [] };
     }
