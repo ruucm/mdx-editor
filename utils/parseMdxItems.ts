@@ -1,3 +1,5 @@
+import { isEmptyOrSpaces } from ".";
+
 export function parseMdxItems(mdxItems: any) {
   let res = "";
 
@@ -27,17 +29,19 @@ function parseMdxItem(mdxItem: any) {
     if (hasChild) res += `<${componentName}`;
     else res += `<${componentName} />`;
 
-    const splited = propertyString.split(",");
+    if (!isEmptyOrSpaces(propertyString)) {
+      const splited = propertyString.split(",");
 
-    for (let j = 0; j < splited.length; j++) {
-      if (j === 0) res += " ";
+      for (let j = 0; j < splited.length; j++) {
+        if (j === 0) res += " ";
 
-      const property = splited[j].split(":");
-      const propertyKey = property[0].trim();
-      const propertyValue = property[1].trim();
-      res += `${propertyKey}=${propertyValue}`;
+        const property = splited[j].split(":");
+        const propertyKey = property[0].trim();
+        const propertyValue = property[1].trim();
+        res += `${propertyKey}=${propertyValue}`;
 
-      if (j < splited.length - 1) res += " ";
+        if (j < splited.length - 1) res += " ";
+      }
     }
 
     if (hasChild) res += ">";
