@@ -349,10 +349,10 @@
   resolved "https://registry.yarnpkg.com/@emotion/memoize/-/memoize-0.7.4.tgz#19bf0f5af19149111c40d98bb0cf82119f5d9eeb"
   integrity sha512-Ja/Vfqe3HpuzRsG1oBtWTHk2PGZ7GR+2Vz5iYGelAw8dx32K0y7PjVuxK6z1nMpZOqAFsRUPCkK1YjJ56qJlgw==
 
-"@harborschool/lighthouse@^1.0.25":
-  version "1.0.25"
-  resolved "https://registry.yarnpkg.com/@harborschool/lighthouse/-/lighthouse-1.0.25.tgz#2edb02022fd844f39a9645a9db65d1caf2497bee"
-  integrity sha512-hSdByvVmQb4GNmWfDt6FpJvTa/r0N30tH7Q6PdVmDMTHeTd0oO9fPfGMdfgzPGlatfmU//lLFdZqgetoPF7jgg==
+"@harborschool/lighthouse@^1.0.26":
+  version "1.0.26"
+  resolved "https://registry.yarnpkg.com/@harborschool/lighthouse/-/lighthouse-1.0.26.tgz#67c699bd77fbadc590d0440aae8b935d24e638c6"
+  integrity sha512-GaHrucQABfERs3zolYMgLUiG1qhdnxtv8smd21awVvlQkrtRvbHd+XnRkz84ouiH+QuWAvi8wvYQvn1yUU1VGQ==
   dependencies:
     react-hook-form "^6.3.0"
     react-is "^16.13.1"
