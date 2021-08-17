@@ -5,21 +5,14 @@ require("dotenv").config({
 
 module.exports = {
   siteMetadata: {
-    title: "Website Template 04",
-    titleTemplate: "%s · Website Template 04",
-    description: "description",
-    // siteUrl: "",
-    // image: "",
-    // twitterUsername: "",
+    title: "Template Gatsby Lighthouse",
+    titleTemplate: "%s · Template Gatsby Lighthouse",
+    description: "Website Description",
+    siteUrl: "https://template-gatsby-lighthouse.com",
+    image: "/website/brand/og.png",
   },
   plugins: [
     "gatsby-plugin-typescript",
-    {
-      resolve: "gatsby-plugin-google-analytics",
-      options: {
-        trackingId: "UA-171020297-1",
-      },
-    },
     {
       resolve: `gatsby-plugin-sitemap`,
       options: {
@@ -91,7 +84,6 @@ module.exports = {
         ],
       },
     },
-    `gatsby-remark-reading-time`,
     {
       resolve: `gatsby-transformer-sharp`,
       options: {
@@ -103,8 +95,8 @@ module.exports = {
     {
       resolve: `gatsby-plugin-manifest`,
       options: {
-        name: `website-template-04`,
-        short_name: `website-template-04`,
+        name: `template-gatsby-lighthouse`,
+        short_name: `template-gatsby-lighthouse`,
         start_url: `/`,
         display: `standalone`,
         icon: `src/assets/images/favicon.png`, // This path is relative to the root of the site.
@@ -129,21 +121,5 @@ module.exports = {
         debug: true,
       },
     },
-    // {
-    //   resolve: `gatsby-plugin-intl-with-root`,
-    //   options: {
-    //     // language JSON resource path
-    //     path: `${__dirname}/src/assets/intl`,
-    //     // supported language
-    //     languages: [`en`, `ko`],
-    //     // language file path
-    //     defaultLanguage: `en`,
-    //     // automatic redirection based on the user's preferred language in browser provided by browser-lang.
-    //     redirect: true,
-    //   },
-    // },
-    // this (optional) plugin enables Progressive Web App + Offline functionality
-    // To learn more, visit: https://gatsby.dev/offline
-    // `gatsby-plugin-offline`,
   ],
 }

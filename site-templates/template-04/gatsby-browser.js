@@ -9,7 +9,7 @@ import log from "loglevel"
 console.log("process.env.PRODUCTION", process.env.PRODUCTION)
 
 if (process.env.PRODUCTION !== "true") {
-  localStorage.setItem("debug", "website-template-04:*")
+  localStorage.setItem("debug", "template-gatsby-lighthouse:*")
   // show trace / debug / warn / error on DEV env
   log.setLevel("trace")
 }

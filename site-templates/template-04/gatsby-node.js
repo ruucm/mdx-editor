@@ -4,26 +4,13 @@ const path = require("path")
 const _ = require("lodash")
 
 // Create pathname!
-exports.onCreateNode = async ({
-  node,
-  actions,
-  getNode,
-  store,
-  cache,
-  createNodeId,
-}) => {
+exports.onCreateNode = async ({ node, actions, getNode }) => {
   const { createNodeField, createNode } = actions
   if (node.internal.type === "Mdx") {
     const filePath = createFilePath({ node, getNode })
-    const language = getFileNamefromPath(filePath) // use file name as language
-    const pathname = `/${language}${stringKnife(filePath, -3, true)}`
+    const pathname = `${stringKnife(filePath, -3, true)}`
     const parent = getNode(_.get(node, "parent")) // using loadash, cause node.parent only returns id
 
-    createNodeField({
-      node,
-      name: "language",
-      value: language,
-    })
     createNodeField({
       node,
       name: "sourceInstanceName",
@@ -52,7 +39,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
           node {
             id
             fields {
-              language
               sourceInstanceName
               pathname
               originalPath
@@ -72,7 +58,6 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
 
   // you'll call `createPage` for each result
   result.data.allMdx.edges.forEach(({ node }, index) => {
-    const language = node.fields.language // use file name as language
     const sourceInstanceName = node.fields.sourceInstanceName
     const pathname = node.fields.pathname
 
@@ -86,46 +71,8 @@ exports.createPages = async ({ graphql, actions, reporter }) => {
         context: {
           id: node.id,
           // current: order,
-          language,
         },
       })
-  })
-
-  /**
-   * Intermediage Contents
-   */
-}
-
-exports.onCreatePage = ({ page, actions }) => {
-  const { deletePage, createPage } = actions
-
-  return new Promise(resolve => {
-    // if the page component is the index page component
-    if (page.componentPath === `${__dirname}/src/pages/home/Styles.js`) {
-      console.log("delete!", page)
-      deletePage(page)
-    }
-
-    // remove pages without language slug
-    const source = page.path.replace("/en", "").replace("/ko", "")
-    // remove pages on beta
-    const pathsToIgnoreOnBeta = []
-    // remove pages on dev
-    // if (pathsToIgnoreOnBeta.includes(source)) deletePage(page)
-
-    // remove test pages on prod
-    const pathsToIgnore = [
-      "/test-page/",
-      "/mail-preview/",
-      ...pathsToIgnoreOnBeta,
-    ]
-    if (
-      process.env.NODE_ENV === "production" &&
-      pathsToIgnore.includes(source)
-    ) {
-      deletePage(page)
-    }
-    resolve()
   })
 }
 
@@ -164,24 +111,4 @@ function stringKnife(str, range, remove = false) {
   if ((!remove && !end && start > 0) || (remove && start < 0))
     return str.replace(sliced, "")
   return sliced
-}
-
-function flattenMessages(nestedMessages, prefix = "") {
-  return Object.keys(nestedMessages).reduce((messages, key) => {
-    const value = nestedMessages[key]
-    const prefixedKey = prefix ? `${prefix}.${key}` : key
-
-    if (typeof value === "string") {
-      messages[prefixedKey] = value
-    } else {
-      Object.assign(messages, flattenMessages(value, prefixedKey))
-    }
-
-    return messages
-  }, {})
-}
-
-function getFileNamefromPath(path) {
-  const splited = path.split("/")
-  return splited[splited.length - 2]
 }

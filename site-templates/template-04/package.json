@@ -1,17 +1,15 @@
 {
-  "name": "template-04",
+  "name": "template-gatsby-lighthouse",
   "private": true,
   "description": "",
   "version": "0.1.0",
-  "author": "ruucm <ruucm@harbor.school>",
+  "author": "ruucm <ruucm.a@gmail.com>",
   "scripts": {
     "build": "gatsby build",
-    "develop": "NODE_TLS_REJECT_UNAUTHORIZED=0 gatsby develop --port 8001 --host=0.0.0.0 --https",
-    "invalidate": "aws cloudfront create-invalidation --distribution-id EM0EP3T3WCNKO --paths '/*'",
+    "develop": "gatsby develop",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\"",
     "start": "npm run develop",
     "serve": "gatsby serve",
-    "deploy": "gatsby-plugin-s3 deploy -y",
     "clean": "gatsby clean",
     "test": "echo \"Write tests! -> https://gatsby.dev/unit-testing\" && exit 1",
     "mdx": "python3 /Users/ruucm/MyDocuments/Carving/tools/notion_renderer/notion_to_mdx.py"
@@ -27,7 +25,7 @@
     "debug": "^4.1.1",
     "firebase": "^7.17.2",
     "framer-motion": "4.1.11",
-    "gatsby": "^3.8.1",
+    "gatsby": "^3.11.1",
     "gatsby-image": "^3.8.0",
     "gatsby-plugin-alias-imports": "^1.0.5",
     "gatsby-plugin-google-analytics": "^3.8.0",
@@ -78,12 +76,5 @@
   "keywords": [
     "gatsby"
   ],
-  "license": "0BSD",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/gatsbyjs/gatsby-starter-default"
-  },
-  "bugs": {
-    "url": "https://github.com/gatsbyjs/gatsby/issues"
-  }
+  "license": "0BSD"
 }
