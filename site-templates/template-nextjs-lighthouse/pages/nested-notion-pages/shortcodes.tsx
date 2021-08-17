@@ -1,5 +1,4 @@
 import * as System from "@harborschool/lighthouse"
-import Image from "next/image"
 import * as React from "react"
 
 export const shortcodes = () => ({
@@ -21,5 +20,4 @@ export const shortcodes = () => ({
   h2: System.HeadingXLarge,
   p: System.ParagraphMedium,
   button: System.Button,
-  img: (props: any) => <Image {...props} width="100%" height="100%" />
 })
