@@ -1,3 +1,4 @@
+import { testMdxFileBase } from './../consts';
 import express from "express";
 import { createPageRender } from "vite-plugin-ssr";
 import * as vite from "vite";
@@ -9,7 +10,7 @@ const root = `${__dirname}/..`;
 
 startServer();
 const opts = {
-  dirname: `${__dirname}/../pages/mdx-pages`,
+  dirname: `${__dirname}/../${testMdxFileBase}`,
   port: 3100,
   title: "mdx-editor",
   open: true,
