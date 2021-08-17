@@ -1,4 +1,5 @@
 import * as System from "@harborschool/lighthouse"
+import Link from "next/link"
 import * as React from "react"
 
 export const shortcodes = () => ({
@@ -20,4 +21,6 @@ export const shortcodes = () => ({
   h2: System.HeadingXLarge,
   p: System.ParagraphMedium,
   button: System.Button,
+  // a: (props: any) => <System.StyledLink as={Link} {...props} highlight />,
+  a: Link,
 })

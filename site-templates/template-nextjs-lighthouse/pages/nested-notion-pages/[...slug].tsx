@@ -4,6 +4,7 @@ import matter from "gray-matter"
 import { MDXRemote } from "next-mdx-remote"
 import { serialize } from "next-mdx-remote/serialize"
 import path from "path"
+import { removeItem } from "../../utils/commonUtils"
 import { shortcodes } from "./shortcodes"
 
 // import Code from '@components/Code';
@@ -35,7 +36,7 @@ export async function getStaticPaths() {
   const files = glob.sync(contentGlob)
 
   const paths = files.map((file) => {
-    const slug = getFileSlug(file).split("/")
+    const slug = removeItem(getFileSlug(file).split("/"), "index")
     return {
       params: {
         slug,
@@ -53,7 +54,14 @@ export async function getStaticProps({ params: { slug } }: any) {
   const files = glob.sync(contentGlob)
 
   const pathRegex = new RegExp(`^${contentPath}/${path.join(...slug)}.mdx$`)
-  const fullPath: any = files.find((file) => pathRegex.test(file))
+  let fullPath: any = files.find((file) => pathRegex.test(file))
+
+  if (!fullPath) {
+    const pathRegexforIndex = new RegExp(
+      `^${contentPath}/${path.join(...slug)}/index.mdx$`
+    )
+    fullPath = files.find((file) => pathRegexforIndex.test(file))
+  }
 
   if (!fullPath) {
     console.warn("No MDX file found for slug")
