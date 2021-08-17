@@ -1,9 +1,9 @@
-import { promises as fs } from "fs"
-import path from "path"
-import renderToString from "next-mdx-remote/render-to-string"
-import hydrate from "next-mdx-remote/hydrate"
-import matter from "gray-matter"
 import glob from "fast-glob"
+import { promises as fs } from "fs"
+import matter from "gray-matter"
+import { MDXRemote } from "next-mdx-remote"
+import { serialize } from "next-mdx-remote/serialize"
+import path from "path"
 import { shortcodes } from "./shortcodes"
 
 // import Code from '@components/Code';
@@ -13,13 +13,11 @@ const components = {
   ...shortcodes(),
 }
 
-export default function Data({ mdxSource, frontMatter }: any) {
-  const content = hydrate(mdxSource, { components })
-
+export default function Data({ source, frontMatter }: any) {
   return (
     <div>
       <h1>{frontMatter.title}</h1>
-      {content}
+      <MDXRemote {...source} components={components} />
     </div>
   )
 }
@@ -37,9 +35,10 @@ export async function getStaticPaths() {
   const files = glob.sync(contentGlob)
 
   const paths = files.map((file) => {
+    const slug = getFileSlug(file).split("/")
     return {
       params: {
-        slug: getFileSlug(file).split("/"),
+        slug,
       },
     }
   })
@@ -60,14 +59,21 @@ export async function getStaticProps({ params: { slug } }: any) {
     console.warn("No MDX file found for slug")
   }
 
-  const mdxSource = await fs.readFile(fullPath)
-  const { content, data } = matter(mdxSource)
+  const source = await fs.readFile(fullPath)
+  const { content, data } = matter(source)
 
-  const mdx = await renderToString(content, { components, scope: data })
+  const mdxSource = await serialize(content, {
+    // Optionally pass remark/rehype plugins
+    mdxOptions: {
+      remarkPlugins: [],
+      rehypePlugins: [],
+    },
+    scope: data,
+  })
 
   return {
     props: {
-      mdxSource: mdx,
+      source: mdxSource,
       frontMatter: data,
     },
   }
