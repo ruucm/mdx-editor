@@ -25,8 +25,6 @@ const components = {
   ...shortcodes(),
 }
 
-console.log("components", components)
-
 export default function PostPage({ source, frontMatter }: any) {
   return (
     <>
