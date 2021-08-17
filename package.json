@@ -11,7 +11,8 @@
     "// Static serve for production": "",
     "prod:serve": "serve dist/client/ --listen 3000",
     "site:new": "cp -r site-templates/notion-lighthouse-template-01 sites/ && mv sites/notion-lighthouse-template-01 sites/user-site-01",
-    "site:deploy-site-01": "vercel ./sites/user-site-01 --confirm"
+    "site:deploy-site-01": "vercel ./sites/user-site-01 --confirm",
+    "mdx": "python3 /Users/ruucm/MyDocuments/Carving/tools/notion_renderer/notion_to_mdx.py"
   },
   "dependencies": {
     "@dnd-kit/core": "^4.0.0-next-2021627184218",
