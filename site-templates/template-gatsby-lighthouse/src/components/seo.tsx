@@ -4,7 +4,7 @@ import PropTypes from "prop-types"
 import * as React from "react"
 import { Helmet } from "react-helmet"
 
-const SEO = ({ title, description, image, home, article }) => {
+const SEO = ({ title, description, image }) => {
   const { pathname } = useLocation()
   const { site } = useStaticQuery(query)
 
@@ -27,14 +27,12 @@ const SEO = ({ title, description, image, home, article }) => {
   }
 
   return (
-    <Helmet title={seo.title} titleTemplate={!home ? titleTemplate : null}>
+    <Helmet title={seo.title} titleTemplate={null}>
       <html lang="en" />
       <meta name="description" content={seo.description} />
       <meta name="image" content={seo.image} />
 
       {seo.url && <meta property="og:url" content={seo.url} />}
-
-      {(article ? true : null) && <meta property="og:type" content="article" />}
 
       {seo.title && <meta property="og:title" content={seo.title} />}
 
