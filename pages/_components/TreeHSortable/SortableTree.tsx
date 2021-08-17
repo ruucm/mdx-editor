@@ -249,14 +249,8 @@ export function SortableTree({
       console.log("newItems", newItems);
 
       setItems(newItems);
-      // store it!
-      setMdxItems?.(newItems);
-      // send it
-      const json = JSON.stringify({
-        filename: "hello-1.page.mdx",
-        content: parseMdxItems(newItems),
-      });
-      sendMessage?.(json);
+
+      save(newItems);
     }
   }
 
@@ -274,7 +268,11 @@ export function SortableTree({
   }
 
   function handleRemove(id: string) {
-    setItems((items) => removeItem(items, id));
+    setItems((items) => {
+      const removed = removeItem(items, id);
+      save(removed);
+      return removed;
+    });
   }
 
   function handleCollapse(id: string) {
@@ -343,6 +341,17 @@ export function SortableTree({
     }
 
     return;
+  }
+
+  function save(newItems: any) {
+    // store it!
+    setMdxItems?.(newItems);
+    // send it
+    const json = JSON.stringify({
+      filename: "hello-1.page.mdx",
+      content: parseMdxItems(newItems),
+    });
+    sendMessage?.(json);
   }
 }
 
