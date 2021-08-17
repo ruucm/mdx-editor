@@ -16,9 +16,9 @@ export function mdxArrToList(
 
     const isHtml = checkBraces(item);
 
-    const isSingleTag = isHtml && item.includes("/>");
-    const isOpenTag = isHtml && item.indexOf("<") === 0 && !item.includes("</");
-    const isCloseTag = isHtml && item.indexOf("</") === 0;
+    const isSingleTag = isSingle(item);
+    const isOpenTag = isOpen(item);
+    const isCloseTag = isClose(item);
     const tagType = getTagType(isSingleTag, isOpenTag, isCloseTag);
 
     const { componentName, properties }: any = parseJSX(item, isHtml, tagType);
@@ -28,8 +28,11 @@ export function mdxArrToList(
 
     if (isHtml) {
       if (isSingleTag) {
-        // handle a single component
-        listItem.id = `👩‍🎨 ${componentName} ${properties}`;
+        const id = `👩‍🎨 ${componentName} ${properties}`;
+        if (!currentComponent)
+          // handle a single component
+          listItem.id = id;
+        else listItem.children.push({ id, children: [] });
       } else if (isOpenTag) {
         if (!currentComponent) {
           // handle a composavnent that has children
@@ -41,7 +44,9 @@ export function mdxArrToList(
           if (childrenIsHtml) {
             const nestedChildren = mdxArrToList(arr, i, true);
             listItem.children.push(nestedChildren[0]);
-            i++; // skip next line
+            while (!isClose(items[i])) {
+              i++; // skip next line
+            }
           }
         }
       } else if (isCloseTag && currentComponent === componentName) {
@@ -70,6 +75,16 @@ export function mdxArrToList(
     if (!currentComponent && listItem.id) {
       list.push(listItem);
       listItem = { id: "", children: [] };
+    }
+
+    function isSingle(item: any) {
+      return isHtml && item.includes("/>");
+    }
+    function isOpen(item: any) {
+      return isHtml && item.indexOf("<") === 0 && !item.includes("</");
+    }
+    function isClose(item: any) {
+      return isHtml && item.indexOf("</") === 0;
     }
   }
 
