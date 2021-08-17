@@ -39,6 +39,7 @@ import { TreeItem, SortableTreeItem, Row } from "./components";
 import { mdxItemsAtom } from "../../../store";
 import { useAtom } from "jotai";
 import { parseMdxItems } from "../../../utils";
+import { testMdxFileName } from "../../../consts";
 
 const measuring = {
   droppable: {
@@ -348,7 +349,7 @@ export function SortableTree({
     setMdxItems?.(newItems);
     // send it
     const json = JSON.stringify({
-      filename: "hello-1.page.mdx",
+      filename: testMdxFileName,
       content: parseMdxItems(newItems),
     });
     sendMessage?.(json);

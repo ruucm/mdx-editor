@@ -1,20 +1,21 @@
-import fs from "fs";
-import matter from "gray-matter";
-import path from "path";
-import { mdxArrToList } from "../../utils";
+import fs from "fs"
+import matter from "gray-matter"
+import path from "path"
+import { mdxArrToList } from "../../utils"
+import { testMdxFileBase, testMdxFileName } from "./../../consts"
 
-export { addPageContext };
+export { addPageContext }
 
 type PageContext = {
-  pageProps: {};
+  pageProps: {}
   documentProps: {
-    title: string;
-    description?: string;
-  };
-};
+    title: string
+    description?: string
+  }
+}
 
 async function addPageContext(pageContext: any): Promise<PageContext> {
-  const { content, data, list } = getMdxSource();
+  const { content, data, list } = getMdxSource()
   return {
     pageProps: {
       content,
@@ -24,17 +25,17 @@ async function addPageContext(pageContext: any): Promise<PageContext> {
       title: "Editor",
       // description: projectsData.description,
     },
-  };
+  }
 }
 
 function getMdxSource() {
-  const POSTS_PATH = path.join(process.cwd(), "pages/mdx-pages");
-  const postFilePath = path.join(POSTS_PATH, `hello-1.page.mdx`);
-  const source = fs.readFileSync(postFilePath);
-  const { content, data } = matter(source);
+  const POSTS_PATH = path.join(process.cwd(), testMdxFileBase)
+  const postFilePath = path.join(POSTS_PATH, testMdxFileName)
+  const source = fs.readFileSync(postFilePath)
+  const { content, data } = matter(source)
 
-  const arr = content.split(/\n/).filter((line) => line !== "");
-  const list = mdxArrToList(arr);
+  const arr = content.split(/\n/).filter((line) => line !== "")
+  const list = mdxArrToList(arr)
 
-  return { content, data, list };
+  return { content, data, list }
 }
