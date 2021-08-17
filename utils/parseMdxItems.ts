@@ -56,7 +56,7 @@ function parseMdxItem(mdxItem: any) {
       }
     }
 
-    if (hasChild) res += `</${componentName}>\n\n`;
+    if (hasChild) res += `\n\n</${componentName}>\n\n`;
   } else {
     res += "\n\n";
     res += content;
