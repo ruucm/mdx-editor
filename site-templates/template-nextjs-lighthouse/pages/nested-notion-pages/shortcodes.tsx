@@ -1,6 +1,5 @@
 import * as System from "@harborschool/lighthouse"
 import Link from "next/link"
-import * as React from "react"
 
 export const shortcodes = () => ({
   video: (props: any) => (
