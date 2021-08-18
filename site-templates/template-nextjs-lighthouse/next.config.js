@@ -11,4 +11,5 @@ module.exports = withMDX({
     config.externals["styletron-server"] = "styletron-server"
     return config
   },
+  pageExtensions: ["page.ts", "page.tsx", "api.ts", "api.tsx"],
 })
