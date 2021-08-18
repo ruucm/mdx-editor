@@ -59,11 +59,6 @@ export function mdxArrToList(
           break
         }
       } else if (tagType === "inline") {
-        // handle inline tags
-        // listItem.children.push({
-        //   id: `👩‍🎨 ${componentName} ${properties}`,
-        //   children: [],
-        // })
         listItem.id = `👩‍🎨 ${componentName} ${properties}`
       }
     } else {
