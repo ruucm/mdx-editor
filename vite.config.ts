@@ -5,7 +5,7 @@ import { UserConfig } from "vite"
 
 const config: UserConfig = {
   plugins: [reactRefresh(), mdx(), ssr()],
-  optimizeDeps: { include: ["@mdx-js/react"] },
+  optimizeDeps: { include: ["@mdx-js/react"], exclude: ["./site-templates"] },
   clearScreen: false,
 }
 
