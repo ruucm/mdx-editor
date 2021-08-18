@@ -1,5 +1,5 @@
-import * as React from "react";
-import * as System from "@harborschool/lighthouse";
+import * as React from "react"
+import * as System from "@harborschool/lighthouse"
 
 export const shortcodes = () => ({
   video: (props: any) => (
@@ -20,4 +20,4 @@ export const shortcodes = () => ({
   h2: System.HeadingXLarge,
   p: System.ParagraphMedium,
   button: System.Button,
-});
+})

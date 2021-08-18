@@ -1,11 +1,11 @@
-import React from "react";
-import { useESM } from "../hooks/use-esm";
+import React from "react"
+import { useESM } from "../hooks/use-esm"
 
-export default IndexPage;
+export default IndexPage
 
 function IndexPage() {
-  const m: any = useESM("https://module.harbor.school/m/useScrollDirection.js");
-  console.log("m?.useScrollDirection}", m?.useScrollDirection);
+  const m: any = useESM("https://module.harbor.school/m/useScrollDirection.js")
+  console.log("m?.useScrollDirection}", m?.useScrollDirection)
 
-  return <>Home</>;
+  return <>Home</>
 }

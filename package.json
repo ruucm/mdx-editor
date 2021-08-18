@@ -13,7 +13,8 @@
     "site:new": "cp -r site-templates/template-04 sites/ && mv sites/template-04 sites/user-site-01",
     "site:deploy-site-01": "vercel ./sites/user-site-01 --confirm",
     "site:deploy-template-04": "vercel ./site-templates/template-04",
-    "mdx": "python3 /Users/ruucm/MyDocuments/Carving/tools/notion_renderer/notion_to_mdx.py"
+    "mdx": "python3 /Users/ruucm/MyDocuments/Carving/tools/notion_renderer/notion_to_mdx.py",
+    "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\""
   },
   "dependencies": {
     "@dnd-kit/core": "^4.0.0-next-2021627184218",
@@ -56,6 +57,7 @@
     "ws": "^8.1.0"
   },
   "devDependencies": {
+    "prettier": "^2.3.2",
     "sass": "^1.37.5"
   }
 }

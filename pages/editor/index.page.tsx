@@ -1,2 +1,2 @@
-export * from "./editor";
-export * from "./index.page.server";
+export * from "./editor"
+export * from "./index.page.server"

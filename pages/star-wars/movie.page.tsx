@@ -1,7 +1,7 @@
-import React from "react";
-import { MovieDetails } from "./types";
+import React from "react"
+import { MovieDetails } from "./types"
 
-export { Page };
+export { Page }
 
 function Page({ movie }: { movie: MovieDetails }) {
   return (
@@ -13,5 +13,5 @@ function Page({ movie }: { movie: MovieDetails }) {
       <br />
       Producer: {movie.producer}
     </>
-  );
+  )
 }

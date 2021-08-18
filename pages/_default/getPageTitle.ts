@@ -1,6 +1,6 @@
-import { PageContext } from "./types";
+import { PageContext } from "./types"
 
-export { getPageTitle };
+export { getPageTitle }
 
 function getPageTitle(pageContext: PageContext): string {
   const title =
@@ -8,6 +8,6 @@ function getPageTitle(pageContext: PageContext): string {
     pageContext.pageExports.documentProps?.title ||
     // For dynamic tiles (defined in the `export addContextProps()` of the page's `.page.server.js`)
     pageContext.documentProps?.title ||
-    "Demo";
-  return title;
+    "Demo"
+  return title
 }

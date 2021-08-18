@@ -1,11 +1,11 @@
-import React from "react";
-import "./PageLayout.css";
-import { MDXProvider } from "@mdx-js/react";
-import { shortcodes } from "./shortcodes";
+import React from "react"
+import "./PageLayout.css"
+import { MDXProvider } from "@mdx-js/react"
+import { shortcodes } from "./shortcodes"
 
-export { PageLayout };
+export { PageLayout }
 
-type Children = React.ReactNode;
+type Children = React.ReactNode
 
 function PageLayout({ children }: { children: Children }) {
   return (
@@ -21,11 +21,11 @@ function PageLayout({ children }: { children: Children }) {
         </Layout>
       </MDXProvider>
     </React.StrictMode>
-  );
+  )
 }
 
 function Layout({ children }: { children: Children }) {
-  return <div>{children}</div>;
+  return <div>{children}</div>
 }
 
 function Sidebar({ children }: { children: Children }) {
@@ -42,7 +42,7 @@ function Sidebar({ children }: { children: Children }) {
     >
       {children}
     </div>
-  );
+  )
 }
 
 function Content({ children }: { children: Children }) {
@@ -57,5 +57,5 @@ function Content({ children }: { children: Children }) {
     >
       {children}
     </div>
-  );
+  )
 }

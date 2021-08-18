@@ -1,26 +1,26 @@
-import { useSortable } from "@dnd-kit/sortable";
-import { motion } from "framer-motion";
-import React from "react";
-import styles from "./Item.module.css";
-import { Handle } from "./components";
+import { useSortable } from "@dnd-kit/sortable"
+import { motion } from "framer-motion"
+import React from "react"
+import styles from "./Item.module.css"
+import { Handle } from "./components"
 
 const baseStyles: React.CSSProperties = {
   position: "relative",
   width: 140,
   height: 140,
-};
+}
 const initialStyles = {
   x: 0,
   y: 0,
   scale: 1,
-};
+}
 
 export function Item({ id }) {
   const { attributes, setNodeRef, listeners, transform, isDragging } =
     useSortable({
       id,
       transition: null,
-    });
+    })
 
   return (
     <motion.div
@@ -61,5 +61,5 @@ export function Item({ id }) {
         <Handle active={{ background: "green", fill: "red" }} {...listeners} />
       </span>
     </motion.div>
-  );
+  )
 }

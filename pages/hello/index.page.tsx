@@ -1,6 +1,6 @@
-import React from "react";
+import React from "react"
 
-export { Page };
+export { Page }
 
 function Page({ name }: { name: string }) {
   return (
@@ -22,5 +22,5 @@ function Page({ name }: { name: string }) {
         <code>*.page.route.js</code>.
       </p>
     </>
-  );
+  )
 }

@@ -1,10 +1,10 @@
 export interface TreeItem {
-  id: string;
-  children: TreeItem[];
-  collapsed?: boolean;
+  id: string
+  children: TreeItem[]
+  collapsed?: boolean
 }
 
-export type TreeItems = TreeItem[];
+export type TreeItems = TreeItem[]
 
 export const initialItems: TreeItems = [
   {
@@ -24,7 +24,7 @@ export const initialItems: TreeItems = [
       },
     ],
   },
-];
+]
 
 export const initialItems2: TreeItems = [
   {
@@ -61,7 +61,7 @@ export const initialItems2: TreeItems = [
       },
     ],
   },
-];
+]
 
 export const initialItems3: TreeItems = [
   {
@@ -126,4 +126,4 @@ export const initialItems3: TreeItems = [
       },
     ],
   },
-];
+]

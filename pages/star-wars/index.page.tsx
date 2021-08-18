@@ -1,7 +1,7 @@
-import React from "react";
-import { Movie } from "./types";
+import React from "react"
+import { Movie } from "./types"
 
-export { Page };
+export { Page }
 
 function Page({ movies }: { movies: Movie[] }) {
   return (
@@ -22,5 +22,5 @@ function Page({ movies }: { movies: Movie[] }) {
         Data can be fetched by using the <code>addPageContext()</code> hook.
       </p>
     </>
-  );
+  )
 }
