@@ -11,7 +11,6 @@ export function Page({ frontMatter, list }: any) {
   const socketUrl = `ws://${hostname}:${SOCKET_PORT}`
   const { sendMessage, lastMessage, readyState } = useWebSocket(socketUrl)
 
-  console.log("frontMatter", frontMatter)
   const connectionStatus = {
     [ReadyState.CONNECTING]: "Connecting",
     [ReadyState.OPEN]: "Open",
