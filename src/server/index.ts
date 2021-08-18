@@ -1,4 +1,3 @@
-import { testMdxFileBase } from "./../consts"
 import express from "express"
 import { createPageRender } from "vite-plugin-ssr"
 import * as vite from "vite"
@@ -9,16 +8,7 @@ const isProduction = process.env.NODE_ENV === "production"
 const root = `${__dirname}/..`
 
 startServer()
-const opts = {
-  dirname: `${__dirname}/../${testMdxFileBase}`,
-  port: 3100,
-  title: "mdx-editor",
-  open: true,
-  o: true,
-  vim: false,
-}
-console.log("opts", opts)
-serverSocket(opts)
+serverSocket()
 
 async function startServer() {
   const app = express()

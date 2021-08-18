@@ -1,3 +1,5 @@
+import { testMdxFileBase } from "../consts"
+
 const path = require("path")
 const WebSocket = require("ws")
 const { SOCKET_PORT } = require("../consts")
@@ -19,14 +21,15 @@ ansiHTML.setColors({
   darkgrey: "444",
 })
 
-export function serverSocket(opts: any) {
+export function serverSocket() {
   const socketServer = new WebSocket.Server({ port: SOCKET_PORT })
 
   const noop = (err: any) => {}
   const updateFile =
-    (opts: any) =>
+    () =>
     ({ filename, content }: any, cb = noop) => {
-      const filepath = path.join(opts.dirname, filename)
+      const POSTS_PATH = path.join(process.cwd(), testMdxFileBase)
+      const filepath = path.join(POSTS_PATH, filename)
       if (!fs.existsSync(filepath)) return
       try {
         fs.writeFile(filepath, content, cb)
@@ -38,12 +41,12 @@ export function serverSocket(opts: any) {
         cb(err)
       }
     }
-  const update = updateFile(opts)
+  const update = updateFile()
 
   socketServer.on("connection", (socket: any) => {
     socket.on("message", (msg: any) => {
       const data = JSON.parse(msg)
-      console.log("on message data", data)
+      // console.log("on message data", data)
       if (data.filename) {
         update(data, (err) => {
           if (err) {
