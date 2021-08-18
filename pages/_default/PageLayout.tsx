@@ -14,8 +14,11 @@ function PageLayout({ children }: { children: Children }) {
         <Layout>
           <Sidebar>
             <a href="/">Home</a>
-            <a href="/editor">Editor</a>
-            <a href="/mdx-pages/hello-1">hello-1</a>
+            <div style={{ display: "flex" }}>
+              <a href="/editor">Editor</a>
+              <div style={{ width: 20 }} />
+              <a href="/mdx-pages/hello-1">hello-1</a>
+            </div>
           </Sidebar>
           <Content>{children}</Content>
         </Layout>
@@ -33,11 +36,8 @@ function Sidebar({ children }: { children: Children }) {
     <div
       style={{
         padding: 20,
-        flexShrink: 0,
         display: "flex",
-        flexDirection: "column",
-        lineHeight: "1.8em",
-        borderRight: "2px solid #eee",
+        justifyContent: "space-between",
       }}
     >
       {children}
