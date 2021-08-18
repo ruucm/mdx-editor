@@ -1,9 +1,8 @@
-export * from "./parseMdxItems";
-export * from "./mdxToList";
-export * from "./mdxArrToList";
+export * from "./mdxArrToList"
+export * from "./parseMdxItems"
 
-export const isClient = typeof window !== "undefined";
+export const isClient = typeof window !== "undefined"
 
 export function isEmptyOrSpaces(str: string) {
-  return str === null || str.match(/^ *$/) !== null;
+  return str === null || str.match(/^ *$/) !== null
 }
