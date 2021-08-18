@@ -10,9 +10,8 @@
     "build:prerender": "vite-plugin-ssr prerender",
     "// Static serve for production": "",
     "prod:serve": "serve dist/client/ --listen 3000",
-    "site:new": "cp -r site-templates/template-04 sites/ && mv sites/template-04 sites/user-site-01",
+    "site:new": "cp -r site-templates/template-nextjs-lighthouse sites/ && mv sites/template-nextjs-lighthouse sites/user-site-01",
     "site:deploy-site-01": "vercel ./sites/user-site-01 --confirm",
-    "site:deploy-template-04": "vercel ./site-templates/template-04",
     "mdx": "python3 /Users/ruucm/MyDocuments/Carving/tools/notion_renderer/notion_to_mdx.py",
     "format": "prettier --write \"**/*.{js,jsx,ts,tsx,json,md}\""
   },
