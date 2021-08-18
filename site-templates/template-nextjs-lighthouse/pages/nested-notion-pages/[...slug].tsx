@@ -6,6 +6,7 @@ import { serialize } from "next-mdx-remote/serialize"
 import path from "path"
 import { removeItem } from "../../utils/commonUtils"
 import { shortcodes } from "./shortcodes"
+import Head from "next/head"
 
 // import Code from '@components/Code';
 
@@ -14,9 +15,14 @@ const components = {
   ...shortcodes(),
 }
 
-export default function Data({ source, frontMatter }: any) {
+export default function Page({ source, frontMatter }: any) {
   return (
     <div>
+      <Head>
+        <title>{frontMatter.title}</title>
+        <meta name="robots" content="follow, index" />
+        <meta property="og:title" content={frontMatter.title} />
+      </Head>
       <h1>{frontMatter.title}</h1>
       <MDXRemote {...source} components={components} />
     </div>
