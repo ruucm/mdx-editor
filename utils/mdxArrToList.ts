@@ -25,7 +25,11 @@ export function mdxArrToList(
     console.log("item", item)
     console.log(`tagType (${i})`, tagType)
 
-    const { componentName, properties }: any = parseJSX(item, isHtml, tagType)
+    const { componentName, properties, inlineTextNode }: any = parseJSX(
+      item,
+      isHtml,
+      tagType
+    )
 
     if (isHtml) {
       if (tagType === "single") {
@@ -60,6 +64,7 @@ export function mdxArrToList(
         }
       } else if (tagType === "inline") {
         listItem.id = `👩‍🎨 ${componentName} ${properties}`
+        listItem.children.push({ id: inlineTextNode, children: [] })
       }
     } else {
       if (currentComponent) {
@@ -128,7 +133,8 @@ function parseJSX(jsx: any, isHtml: any, tagType: TagType) {
 
     return {
       componentName: rawTagName,
-      properties: objectifiedStr(`${rawAttrs} children="${inlineTextNode}"`),
+      properties: objectifiedStr(rawAttrs),
+      inlineTextNode,
     }
   }
 }
