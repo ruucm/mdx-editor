@@ -30,9 +30,9 @@ async function addPageContext(pageContext: any): Promise<PageContext> {
 }
 
 function getMdxSource() {
-  const POSTS_PATH = path.join(process.cwd(), testMdxFileBase)
-  const postFilePath = path.join(POSTS_PATH, testMdxFileName)
-  const source = fs.readFileSync(postFilePath)
+  const POST_BASE_PATH = path.join(process.cwd(), testMdxFileBase)
+  const POST_FILE_PATH = path.join(POST_BASE_PATH, testMdxFileName)
+  const source = fs.readFileSync(POST_FILE_PATH)
   const { content, data } = matter(source)
 
   const arr = content.split(/\n/).filter((line) => line !== "")

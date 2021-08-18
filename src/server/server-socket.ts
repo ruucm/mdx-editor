@@ -28,11 +28,11 @@ export function serverSocket() {
   const updateFile =
     () =>
     ({ filename, content }: any, cb = noop) => {
-      const POSTS_PATH = path.join(process.cwd(), testMdxFileBase)
-      const filepath = path.join(POSTS_PATH, filename)
-      if (!fs.existsSync(filepath)) return
+      const POST_BASE_PATH = path.join(process.cwd(), testMdxFileBase)
+      const POST_FILE_PATH = path.join(POST_BASE_PATH, filename)
+      if (!fs.existsSync(POST_FILE_PATH)) return
       try {
-        fs.writeFile(filepath, content, cb)
+        fs.writeFile(POST_FILE_PATH, content, cb)
       } catch (e) {
         const err = {
           text: e.toString(),
