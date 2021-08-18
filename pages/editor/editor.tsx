@@ -31,9 +31,17 @@ export function Page({ frontMatter, list }: any) {
 
   return (
     <>
-      connectionStatus : {connectionStatus}
-      <br />
-      editing (now) : {`${testMdxFileBase}${testMdxFileName}`}
+      <div
+        style={{
+          border: "1px dashed hsl(0, 0%, 90%)",
+          marginTop: 40,
+          padding: 12,
+        }}
+      >
+        connectionStatus : {connectionStatus}
+        <br />
+        editing (now) : {`${testMdxFileBase}${testMdxFileName}`}
+      </div>
       <div
         style={{ background: "hsl(0, 0%, 90%)", marginTop: 40, padding: 12 }}
       >
