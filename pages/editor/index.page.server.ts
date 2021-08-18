@@ -20,6 +20,7 @@ async function addPageContext(pageContext: any): Promise<PageContext> {
     pageProps: {
       content,
       list,
+      frontMatter: data,
     },
     documentProps: {
       title: "Editor",

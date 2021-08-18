@@ -6,11 +6,12 @@ import { mdxItemsAtom } from "../../store"
 import { isClient } from "../../utils"
 import { MySetup } from "../_components/TreeHSortable/Tree.story"
 
-export function Page({ list }: any) {
+export function Page({ frontMatter, list }: any) {
   const hostname = typeof window !== "undefined" && window.location.hostname
   const socketUrl = `ws://${hostname}:${SOCKET_PORT}`
   const { sendMessage, lastMessage, readyState } = useWebSocket(socketUrl)
 
+  console.log("frontMatter", frontMatter)
   const connectionStatus = {
     [ReadyState.CONNECTING]: "Connecting",
     [ReadyState.OPEN]: "Open",
@@ -26,7 +27,7 @@ export function Page({ list }: any) {
   // sync written mdx content
   const [, setMdxItems] = useAtom(mdxItemsAtom)
   useEffect(() => {
-    setMdxItems(list)
+    setMdxItems({ frontMatter, body: list })
   }, [list])
 
   return (
@@ -34,6 +35,11 @@ export function Page({ list }: any) {
       connectionStatus : {connectionStatus}
       <br />
       editing (now) : {`${testMdxFileBase}${testMdxFileName}`}
+      <div
+        style={{ background: "hsl(0, 0%, 90%)", marginTop: 40, padding: 12 }}
+      >
+        frontMatter : {JSON.stringify(frontMatter, null, 2)}
+      </div>
       {isClient && <MySetup sendMessage={sendMessage} />}
     </>
   )

@@ -29,7 +29,8 @@ export const MySetup = ({ sendMessage }: any) => {
       <SortableTree
         collapsible
         removable
-        defaultItems={mdxItems}
+        defaultItems={mdxItems.body}
+        frontMatter={mdxItems.frontMatter}
         setMdxItems={setMdxItems}
         sendMessage={sendMessage}
       />

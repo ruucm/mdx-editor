@@ -34,12 +34,10 @@ import {
   setProperty,
 } from "./utilities";
 import type { FlattenedItem, SensorContext, TreeItems } from "./types";
-import { sortableTreeKeyboardCoordinates } from "./keyboardCoordinates";
 import { TreeItem, SortableTreeItem, Row } from "./components";
-import { mdxItemsAtom } from "../../../store";
-import { useAtom } from "jotai";
 import { parseMdxItems } from "../../../utils";
 import { testMdxFileName } from "../../../consts";
+import { SetStateAction } from "jotai";
 
 const measuring = {
   droppable: {
@@ -56,16 +54,20 @@ const dropAnimation: DropAnimation = {
 interface Props {
   collapsible?: boolean;
   defaultItems?: TreeItems;
+  frontMatter?: any;
   indentationWidth?: number;
   indicator?: boolean;
   removable?: boolean;
-  setMdxItems?: (items: TreeItems) => void;
+  setMdxItems?: (
+    update: SetStateAction<{ frontMatter: {}; body: never[] }>
+  ) => void;
   sendMessage?: (message: string) => void;
 }
 
 export function SortableTree({
   collapsible,
   defaultItems = [],
+  frontMatter = {},
   indicator,
   indentationWidth = 50,
   removable,
@@ -346,11 +348,11 @@ export function SortableTree({
 
   function save(newItems: any) {
     // store it!
-    setMdxItems?.(newItems);
+    setMdxItems?.({ frontMatter, body: newItems });
     // send it
     const json = JSON.stringify({
       filename: testMdxFileName,
-      content: parseMdxItems(newItems),
+      content: parseMdxItems(frontMatter, newItems),
     });
     sendMessage?.(json);
   }

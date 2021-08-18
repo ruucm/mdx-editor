@@ -1,12 +1,29 @@
 import { isEmptyOrSpaces } from ".";
+import { TreeItems } from "../pages/_components/TreeHSortable/types";
 
-export function parseMdxItems(mdxItems: any) {
+export function parseMdxItems(frontMatter: any, mdxItems: TreeItems) {
   let res = "";
+  res += parseFrontMatter(frontMatter);
 
   for (let i = 0; i < mdxItems.length; i++) {
     const mdxItem = mdxItems[i];
     res += parseMdxItem(mdxItem);
   }
+
+  return res;
+}
+
+function parseFrontMatter(frontMatter: any) {
+  let res = "---";
+
+  for (const key in frontMatter) {
+    if (frontMatter.hasOwnProperty(key)) {
+      const element = frontMatter[key];
+      res += `\n\n${key}: ${element}`;
+    }
+  }
+
+  res += "\n\n---";
 
   return res;
 }
